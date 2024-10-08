@@ -1,0 +1,13 @@
+<h1>Edit Post {{ post.title }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {{ form.title.label_tag }} {{ form.title }}  
+    <br></br>
+    {{ form.content.label_tag }} {{ form.content }}  
+    <br></br>
+    
+
+    <button type="submit">{% if post %}Save Changes{% else %}Edit Post{% endif %}</button>
+</form>

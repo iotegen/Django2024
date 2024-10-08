@@ -1,0 +1,35 @@
+<h1>{{ post.title }}</h1>
+<p>By {{ post.author }} | Published on {{ post.created_at }}</p>
+<p>{{ post.content }}</p>
+
+<h2>Comments</h2>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.content }} - by {{ comment.author }} on {{ comment.created_at }}</li>
+    {% empty %}
+        <li>No comments yet. Be the first to comment!</li>
+    {% endfor %}
+</ul>
+
+
+<h2>Add a Comment</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ comment_form.content.label_tag }} {{ comment_form.content }} 
+    <br></br>
+    {{ comment_form.user.label_tag }} {{ comment_form.user }}  
+
+    <button type="submit">Submit Comment</button>
+</form>
+
+{% if request.user == post.author %}
+    <a href="{% url 'post_edit' post.id %}">Edit Post</a>
+    <br></br>
+    <form method="POST" action="{% url 'post_delete' post.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete Post</button>
+    </form>
+{% endif %}
+
+
+

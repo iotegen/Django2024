@@ -1,0 +1,26 @@
+{% if post %}
+    <h1>Edit Post: {{ post.title }}</h1>
+{% else %}
+    <h1>Create New Post</h1>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    {{ form.title.label_tag }} {{ form.title }}  
+    <br></br>
+    {{ form.content.label_tag }} {{ form.content }}  
+    <br></br>
+    <label for="id_author">Select Author:</label>
+    {{ form.author }}  
+
+    <button type="submit">{% if post %}Save Changes{% else %}Create Post{% endif %}</button>
+</form>
+
+
+{% if post %}
+    <form method="POST" action="{% url 'post_delete' post.id %}" style="margin-top: 20px;">
+        {% csrf_token %}
+        <button type="submit">Delete Post</button>
+    </form>
+{% endif %}
